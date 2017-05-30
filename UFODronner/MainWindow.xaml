@@ -5,8 +5,133 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UFODronner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" 
+        AllowsTransparency="True" WindowStyle="None"
+        Background="#0000"
+        Name="wndMain" PreviewMouseWheel="wndMain_PreviewMouseWheel"
+        DataContext="{Binding Source, RelativeSource={RelativeSource Mode=Self}}"
+        Width="{Binding WindowWidth}" Height="{Binding WindowHeight}"
+        ResizeMode="CanResizeWithGrip"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:behaviors="clr-namespace:UFODronner.Behaviors"
+        xmlns:converters="clr-namespace:UFODronner.Converters"
+        xmlns:ts="clr-namespace:UFODronner.TemplateSelectors"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:UFODronner.Controls">
+    <Window.Resources>
+        <converters:HalfInversedValueConverter x:Key="halfInversedValueConverter"/>
+        <converters:RealToViewCoordConverter x:Key="realToViewCoordConverter"/>
+        <converters:OneDivideValueConverter x:Key="oneDivideValueConverter" />
+
+        <ts:MapObjectTemplateSelector x:Key="mapObjectTemplateSelector"/>
+
+        <DataTemplate x:Key="Dron1">
+            <controls:Dron Color="Green" Radius="{Binding InterferenceRadius}" RotateAngle="{Binding RotateAngle}"
+                           Angle="{Binding Angle}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Dron2">
+            <controls:Dron Color="Red" Radius="{Binding InterferenceRadius}" RotateAngle="{Binding RotateAngle}" 
+                           Angle="{Binding Angle}"/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        
+        <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="2">
+            <DockPanel>
+                <Border DockPanel.Dock="Top" Height="24" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0,0.4" >
+                            <GradientStop Color="AliceBlue" Offset="0"/>
+                            <GradientStop Color="LightBlue" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Stretch" Orientation="Horizontal">
+                            <Button Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}" Background="AliceBlue" Style="{x:Null}"
+                                    Padding="2" Margin="2" Click="Button_Click" >
+                                <Path Data="M 0 0 L 1 1 M 0 1 L 1 0" StrokeThickness="2" Stroke="Red" Stretch="Fill"  />
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Title, ElementName=wndMain}" Margin="5 2 2 2" VerticalAlignment="Center" />
+                    </DockPanel>
+
+                </Border>
+                <Border>
+                    <DockPanel>
+                        <Border DockPanel.Dock="Left" Background="White" Width="200">
+                            <StackPanel Margin="3">
+                                <TextBlock Text="Распределение дронов"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="1" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <Slider Maximum="3" Minimum="0" Grid.Column="1" TickPlacement="Both" Interval="38" IsSnapToTickEnabled="True" />
+                                    <TextBlock Text="2" HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="2" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding Drons}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <CheckBox IsChecked="{Binding IsActivated}" DockPanel.Dock="Right"
+                                                          IsEnabled="{Binding CanActivate}" />
+
+                                                <TextBlock Text="{Binding Model.Name}"/>
+                                            </DockPanel>
+                                            
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <DockPanel>
+                                <Border DockPanel.Dock="Bottom" Background="White" DataContext="{Binding WorkFlow}">
+                                    <DockPanel>
+                                        <ResizeGrip DockPanel.Dock="Right" Cursor="SizeNWSE" />
+                                        <TextBlock>
+                                        <Run Text="{Binding CursorPoint.X}"/>:
+                                        <Run Text="{Binding CursorPoint.Y}"/>
+                                        (<Run Text="{Binding CursorPixel}"/>)
+                                        </TextBlock>
+                                    </DockPanel>
+
+                                </Border>
+                                <Grid MouseMove="Canvas_MouseMove" Background="#01ffffff">
+                                    <Border BorderBrush="Green" BorderThickness="2" 
+                                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Border DataContext="{Binding Map}" Width="{Binding Width}" Height="{Binding Height}">
+                                            <ItemsControl ItemsSource="{Binding MapObjects}" ItemTemplateSelector="{StaticResource mapObjectTemplateSelector}">
+                                                <!--<ItemsControl.Resources>
+                                                    <local:MyBehaviors x:Key="myBehaviors" x:Shared="False">
+                                                        <behaviors:DragBehavior MapObject="{Binding}"/>
+                                                    </local:MyBehaviors>
+                                                </ItemsControl.Resources>-->
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <Canvas IsItemsHost="True" ClipToBounds="True"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemContainerStyle>
+                                                    <Style TargetType="ContentPresenter">
+                                                        <Setter Property="Canvas.Left" Value="{Binding X, Mode=TwoWay}">
+                                                        </Setter>
+                                                        <Setter Property="Canvas.Top" 
+                                                            Value="{Binding Y, Mode=TwoWay}"/>
+                                                    </Style>
+                                                </ItemsControl.ItemContainerStyle>
+                                            </ItemsControl>
+
+                                        </Border>
+                                    </Border>
+                                </Grid>
+                            </DockPanel>
+
+                        </Border>
+                    </DockPanel>
+                </Border>
+            </DockPanel>
+        </Border>
     </Grid>
 </Window>

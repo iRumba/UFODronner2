@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +57,59 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\DragBehavior.cs" />
+    <Compile Include="Behaviors\RotateBehavior.cs" />
+    <Compile Include="Behaviors\SensitivityBehavior.cs" />
+    <Compile Include="Controls\Dron.xaml.cs">
+      <DependentUpon>Dron.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DronBody.xaml.cs">
+      <DependentUpon>DronBody.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VisibleAngle.xaml.cs">
+      <DependentUpon>VisibleAngle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\HalfInversedValueConverter.cs" />
+    <Compile Include="Converters\HalfValueConverter.cs" />
+    <Compile Include="Converters\OneDivideValueConverter.cs" />
+    <Compile Include="Converters\RealToViewCoordConverter.cs" />
+    <Compile Include="Models\Dron.cs" />
+    <Compile Include="Models\Dron1.cs" />
+    <Compile Include="Models\Dron2.cs" />
+    <Compile Include="Models\DronCreator.cs" />
+    <Compile Include="Models\Map.cs" />
+    <Compile Include="Models\MapObject.cs" />
+    <Compile Include="Models\NamedDron.cs" />
+    <Compile Include="TemplateSelectors\MapObjectTemplateSelector.cs" />
+    <Compile Include="Utils\CoordHelper.cs" />
+    <Compile Include="Utils\IPropertyModifier.cs" />
+    <Compile Include="Utils\ModifiedProperty.cs" />
+    <Compile Include="Utils\PropertyModifier.cs" />
+    <Compile Include="ViewModels\AvailableDron.cs" />
+    <Compile Include="ViewModels\DronsMenu.cs" />
+    <Compile Include="ViewModels\DronVm.cs" />
+    <Compile Include="ViewModels\Main.cs" />
+    <Compile Include="ViewModels\MapVm.cs" />
+    <Compile Include="ViewModels\CoordObject.cs" />
+    <Compile Include="ViewModels\MapLabel.cs" />
+    <Compile Include="ViewModels\MapObjectVm.cs" />
+    <Compile Include="ViewModels\Notifier.cs" />
+    <Compile Include="ViewModels\ScaledObject.cs" />
+    <Compile Include="ViewModels\ScaledValue.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\WorkFlow.cs" />
+    <Page Include="Controls\Dron.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DronBody.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VisibleAngle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +122,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace UFODronner.Models
 {
-    class DronCreator
+    public class DronCreator
     {
+
     }
 }

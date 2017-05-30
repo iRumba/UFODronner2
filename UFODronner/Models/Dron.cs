@@ -20,6 +20,8 @@ namespace UFODronner.Models
 
         public double MaxSensitivity { get; set; }
 
+        public double RotateAngle { get; set; }
+
         public double Sensitivity
         {
             get

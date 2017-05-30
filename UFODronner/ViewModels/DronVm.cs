@@ -83,12 +83,12 @@ namespace UFODronner.ViewModels
         {
             get
             {
-                return _rotateAngle;
+                return TypedModel.PackagedObject.RotateAngle;
             }
 
             set
             {
-                _rotateAngle = value;
+                TypedModel.PackagedObject.RotateAngle = value;
                 OnPropertyChanged(nameof(RotateAngle));
             }
         }
@@ -101,14 +101,14 @@ namespace UFODronner.ViewModels
             }
         }
 
-        public double AngleCoefficient
-        {
-            get
-            {
-                var obj = TypedModel.PackagedObject;
-                return (obj.MaxAngle - obj.MinAngle) / (obj.MaxSensitivity - obj.MinSensitivity);
-            }
-        }
+        //public double AngleCoefficient
+        //{
+        //    get
+        //    {
+        //        var obj = TypedModel.PackagedObject;
+        //        return (obj.MaxAngle - obj.MinAngle) / (obj.MaxSensitivity - obj.MinSensitivity);
+        //    }
+        //}
 
         public double InterferenceRadius
         {

@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppModel.cs" />
     <Compile Include="Behaviors\DragBehavior.cs" />
     <Compile Include="Behaviors\RotateBehavior.cs" />
     <Compile Include="Behaviors\SensitivityBehavior.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Utils\IPropertyModifier.cs" />
     <Compile Include="Utils\ModifiedProperty.cs" />
     <Compile Include="Utils\PropertyModifier.cs" />
+    <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\AvailableDron.cs" />
     <Compile Include="ViewModels\DronsMenu.cs" />
     <Compile Include="ViewModels\DronVm.cs" />

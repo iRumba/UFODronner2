@@ -12,6 +12,13 @@ namespace UFODronner.Models
         double _width;
         double _height;
 
+        public List<MapObject> MapObjects { get; set; }
+
+        public Map()
+        {
+            MapObjects = new List<MapObject>();
+        }
+
         public double Width
         {
             get

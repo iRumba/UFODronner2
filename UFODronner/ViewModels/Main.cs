@@ -6,42 +6,49 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using UFODronner.Models;
+using UFODronner.Utils;
 
 namespace UFODronner.ViewModels
 {
     public class Main : Notifier
     {
-        Size _windowSize;
-        Point _mapPosition;
-        Size _mapSize;
+        AppModel _source;
 
         double _windowWidth;
         double _windowHeight;
 
         public WorkFlow WorkFlow { get; set; }
 
+        public RelayCommand AddDronCommand { get; set; }
+
+
+        [Obsolete]
         public List<DronVm> Drons { get; }
 
         public MapVm Map { get; }
 
+        [Obsolete]
         public ObservableCollection<CoordObject> MapObjects { get; set; }
 
         public Main()
         {
+            _source = new AppModel();
+            
+            AddDronCommand = new RelayCommand();
+            AddDronCommand.Predicate += AddDronCommand_Predicate;
+            AddDronCommand.Executed += AddDronCommand_Executed;
+
+            _source.DronAdded += _source_DronAdded;
+            _source.DronRemoved += _source_DronRemoved;
+
             Map = new MapVm(new Map { Width = 250, Height=250 })
             {
                 X = 20,
                 Y = 20,
                 Scale = 2
             };
-            //Map.Size.X = 250;
-            //Map.Size.Y = 250;
-            WindowSize = new Size(1000, 800);
             WindowWidth = 1000;
             WindowHeight = 800;
-            //MapSize = new Size(500, 500);
-            //MapPosition = new Point(20, 20);
-            //MapObjects = new ObservableCollection<MapObject>();
             Drons = new List<DronVm>
             {
                 new DronVm(new Dron1() { X = 100, Y = 100 }),
@@ -58,6 +65,30 @@ namespace UFODronner.ViewModels
             WorkFlow = new WorkFlow();
         }
 
+        private void _source_DronRemoved(Dron obj)
+        {
+            AddDronCommand.RaiseCanExecute();
+        }
+
+        private void _source_DronAdded(Dron obj)
+        {
+            AddDronCommand.RaiseCanExecute();
+        }
+
+        private void AddDronCommand_Executed(object obj)
+        {
+            var dron = obj as Dron;
+            if (dron == null)
+                dron = new Dron();
+            _source.AddDron(dron);
+        }
+
+        private bool AddDronCommand_Predicate(object arg)
+        {
+            return _source.CanAdd;
+        }
+
+        [Obsolete]
         public IEnumerable<DronVm> DisactivatedDrons
         {
             get
@@ -66,6 +97,7 @@ namespace UFODronner.ViewModels
             }
         }
 
+        [Obsolete]
         public IEnumerable<DronVm> ActivatedDrons
         {
             get
@@ -73,48 +105,7 @@ namespace UFODronner.ViewModels
                 return Drons.Where(d => d.IsActivated);
             }
         }
-
-        public Point MapPosition
-        {
-            get
-            {
-                return _mapPosition;
-            }
-
-            set
-            {
-                _mapPosition = value;
-            }
-        }
-
-        public Size MapSize
-        {
-            get
-            {
-                return _mapSize;
-            }
-
-            set
-            {
-                _mapSize = value;
-                OnPropertyChanged(nameof(MapSize));
-            }
-        }
-
-        public Size WindowSize
-        {
-            get
-            {
-                return _windowSize;
-            }
-
-            set
-            {
-                _windowSize = value;
-                OnPropertyChanged(nameof(WindowSize));
-            }
-        }
-
+        
         public double WindowWidth
         {
             get
@@ -128,7 +119,7 @@ namespace UFODronner.ViewModels
                 OnPropertyChanged(nameof(WindowWidth));
             }
         }
-
+        
         public double WindowHeight
         {
             get
@@ -143,6 +134,7 @@ namespace UFODronner.ViewModels
             }
         }
 
+        [Obsolete]
         private void Dron_ActivatedChanged(DronVm obj)
         {
             var canActivate = ActivatedDrons.Count() < 3;

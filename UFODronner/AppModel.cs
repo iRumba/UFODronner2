@@ -10,6 +10,7 @@ namespace UFODronner
     public class AppModel
     {
         List<Dron> _drons;
+        List<Dron> _dronPrototypes;
 
         public event Action<Dron> DronAdded;
         public event Action<Dron> DronRemoved;
@@ -17,6 +18,13 @@ namespace UFODronner
         public AppModel()
         {
             _drons = new List<Dron>();
+            _dronPrototypes = new List<Dron>
+            {
+                new Dron
+                {
+                    
+                }
+            };
         }
 
         public bool CanAdd
@@ -41,6 +49,12 @@ namespace UFODronner
         {
             if (_drons.Remove(dron))
                 DronRemoved?.Invoke(dron);
+        }
+
+        public IEnumerable<Dron> GetDrons()
+        {
+            foreach (var dron in _drons)
+                yield return dron;
         }
     }
 }

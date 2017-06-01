@@ -58,7 +58,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppModel.cs" />
+    <Compile Include="Behaviors\ChangeValueBehavior.cs" />
     <Compile Include="Behaviors\DragBehavior.cs" />
+    <Compile Include="Behaviors\RemoveBehavior.cs" />
     <Compile Include="Behaviors\RotateBehavior.cs" />
     <Compile Include="Behaviors\SensitivityBehavior.cs" />
     <Compile Include="Controls\Dron.xaml.cs">
@@ -88,6 +90,7 @@
     <Compile Include="Utils\PropertyModifier.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\AvailableDron.cs" />
+    <Compile Include="ViewModels\DonateItem.cs" />
     <Compile Include="ViewModels\DronsMenu.cs" />
     <Compile Include="ViewModels\DronVm.cs" />
     <Compile Include="ViewModels\Main.cs" />
@@ -100,6 +103,9 @@
     <Compile Include="ViewModels\ScaledValue.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WorkFlow.cs" />
+    <Compile Include="WndHelp.xaml.cs">
+      <DependentUpon>WndHelp.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\Dron.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +131,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Themes\generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WndHelp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

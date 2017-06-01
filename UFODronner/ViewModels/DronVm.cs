@@ -36,6 +36,7 @@ namespace UFODronner.ViewModels
                 TypedModel.PackagedObject.Sensitivity = value;
                 OnPropertyChanged(nameof(Sensitivity));
                 OnPropertyChanged(nameof(Angle));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -143,13 +144,31 @@ namespace UFODronner.ViewModels
         {
             get
             {
-                return _value;
+                return CoerceValue(_value);
             }
 
             set
             {
-                _value = value;
-                OnPropertyChanged(nameof(value));
+                value = CoerceValue(value);
+                if (value != _value)
+                {
+                    _value = value;
+                    OnPropertyChanged(nameof(Value));
+                    OnPropertyChanged(nameof(ValueAngle));
+                }
+            }
+        }
+
+        double CoerceValue(double value)
+        {
+            return Math.Round(Math.Min(Sensitivity, Math.Max(0, value)), 2);
+        }
+
+        public double ValueAngle
+        {
+            get
+            {
+                return Value / MaxSensitivity * Angle;
             }
         }
 

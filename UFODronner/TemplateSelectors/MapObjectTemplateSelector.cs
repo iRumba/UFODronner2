@@ -22,7 +22,7 @@ namespace UFODronner.TemplateSelectors
 
             try
             {
-                var res = element.FindResource(dron.Name) as DataTemplate;
+                var res = element.FindResource(dron.TypedModel.GetType().Name) as DataTemplate;
                 return res;
             }
             catch

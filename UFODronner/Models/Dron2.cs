@@ -17,7 +17,7 @@ namespace UFODronner.Models
             InterferenceRadius = 150,
         })
         {
-            Name = "Dron2";
+            Name = "Dron2 (805)";
         }
     }
 }

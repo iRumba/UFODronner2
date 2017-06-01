@@ -70,8 +70,11 @@ namespace UFODronner.Behaviors
 
         private void AssociatedObject_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _currentCursorPosition = e.GetPosition(AssociatedObject);
-            _isDragged = AssociatedObject.CaptureMouse();
+            if (Keyboard.Modifiers == ModifierKeys.None)
+            {
+                _currentCursorPosition = e.GetPosition(AssociatedObject);
+                _isDragged = AssociatedObject.CaptureMouse();
+            }
         }
 
         double Top

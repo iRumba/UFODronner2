@@ -31,7 +31,7 @@ namespace UFODronner.Behaviors
         {
             base.OnAttached();
 
-            AssociatedObject.Cursor = Cursors.SizeAll;
+            AssociatedObject.Cursor = Cursors.Hand;
 
             AssociatedObject.MouseLeftButtonDown += AssociatedObject_MouseLeftButtonDown;
             AssociatedObject.MouseLeftButtonUp += AssociatedObject_MouseLeftButtonUp;

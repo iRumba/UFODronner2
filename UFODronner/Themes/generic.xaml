@@ -14,6 +14,8 @@
             <i:Interaction.Behaviors>
                 <behaviors:DragBehavior MapObject="{Binding}"/>
                 <behaviors:SensitivityBehavior Dron="{Binding}" Delta="0.5"/>
+                <behaviors:RemoveBehavior Dron="{Binding}"/>
+                <behaviors:ChangeValueBehavior Dron="{Binding}"/>
             </i:Interaction.Behaviors>
             <Ellipse Stroke="{TemplateBinding Color}" StrokeThickness="2" Width="14" Fill="#01ffffff" 
                          Height="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}"/>
@@ -64,17 +66,57 @@
                                 </TransformGroup>
                             </Path.RenderTransform>
                         </Path>
+                        <Path Data="M 0 0 M 0 2 M 2 2 M 1 1 L 1 0" Stretch="Uniform" StrokeThickness="1" 
+                              Canvas.Left="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HalfInversedValueConverter}}"
+                              Canvas.Top="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HalfInversedValueConverter}}"
+                              Canvas.ZIndex="1"
+                              Width="2000" Height="2000" RenderTransformOrigin="0.5 0.5" Stroke="Red"
+                              Name="qwe">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding ValueAngle, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HalfInversedValueConverter}}"/>
+                                    <RotateTransform Angle="{Binding RotateAngle, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" Value="0">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                        <Path Data="M 0 0 M 0 2 M 2 2 M 1 1 L 1 0" Stretch="Uniform" StrokeThickness="1" 
+                              Canvas.Left="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HalfInversedValueConverter}}"
+                              Canvas.Top="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HalfInversedValueConverter}}"
+                              Canvas.ZIndex="1"
+                              Width="2000" Height="2000" RenderTransformOrigin="0.5 0.5" Stroke="Red">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding ValueAngle, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HalfValueConverter}}"/>
+                                    <RotateTransform Angle="{Binding RotateAngle, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" Value="0">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
                         <Path Data="M 0 0 M 0 2 M 2 2 M 1 1 L 1 0" Stretch="Uniform" StrokeThickness="5" 
                               Canvas.Left="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HalfInversedValueConverter}}"
                               Canvas.Top="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HalfInversedValueConverter}}"
                               Width="2000" Height="2000" RenderTransformOrigin="0.5 0.5"
                               Canvas.ZIndex="5">
                             <Path.Stroke>
-                                <!--<LinearGradientBrush StartPoint="0,0" EndPoint="1 0">
-                                    <GradientStop Offset="0.1" />
-                                    <GradientStop Color="White" Offset="0.5"/>
-                                    <GradientStop Offset="0.9"/>
-                                </LinearGradientBrush>-->
                                 <RadialGradientBrush RadiusY="0.6" >
                                     <GradientStop Offset="0.1"/>
                                     <GradientStop Color="White" Offset="0.5"/>
